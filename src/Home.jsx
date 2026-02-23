@@ -71,7 +71,7 @@ function Home() {
                 const user = auth.currentUser;
                 if (!user) return;
                 try {
-                sendEvent(token, totalMs);
+                sendEvent(totalMs);
                 } catch (err) {
                     console.error("Failed to get token:", err);
     }
