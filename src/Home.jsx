@@ -60,6 +60,7 @@ function Home() {
             setSeconds(0);
             setMinutes(0);
             setHours(0);
+            setControls(play)
             const token = localStorage.getItem('google_token');
             const totalMs = (hours * 3600000 + minutes * 60000 + seconds * 1000)/5;
             const date = new Date (Date.now() + totalMs)
@@ -77,12 +78,15 @@ function Home() {
         }
 
         async function sendEvent(totalMs) {
-            const refreshToken = localStorage.getItem('google_token'); // Saved during login
+            const refreshToken = localStorage.getItem('google_token'); 
+            const now = Date.now();
+            const startDate = new Date(now);
+            const endDate = new Date(now + totalMs);
 
             const event = {
                 summary: 'Flomo Break',
-                start: { dateTime: new Date().toISOString() },
-                end: { dateTime: new Date(Date.now() + totalMs).toISOString() },
+                start: { dateTime: startDate.toISOString() },
+                end: { dateTime: endDate.toISOString() },
             };
 
             const response = await fetch("/api/create-event", {
